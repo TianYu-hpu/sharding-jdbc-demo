@@ -25,7 +25,7 @@ public class OrderDaoTest {
 
     @Test
     public void testInsertOrder(){
-        for(int i=1;i<20;i++){
+        for(int i=1;i<100;i++){
             orderDao.insertOrder(new BigDecimal(i),1L,"SUCCESS");
         }
     }
@@ -33,6 +33,12 @@ public class OrderDaoTest {
     @Test
     public void testSelectOrderbyIds(){
         List<Long> ids = new ArrayList<>();
+        ids.add(1123596324344692736L);
+        ids.add(1123596323241590785L);
+        ids.add(1123596324344692736L);
+        ids.add(1123596323241590785L);
+        ids.add(1123596324344692736L);
+        ids.add(1123596323241590785L);
         ids.add(1123596324344692736L);
         ids.add(1123596323241590785L);
 
