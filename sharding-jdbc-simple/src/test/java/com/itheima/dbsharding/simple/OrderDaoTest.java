@@ -33,8 +33,9 @@ public class OrderDaoTest {
 
     @Test
     public void testInsertOrder(){
-        for(int i=1;i<20;i++){
-            orderDao.insertOrder(new BigDecimal(i),4L,"SUCCESS");
+        for(long i=1;i<20;i++){
+            orderDao.insertOrder(new BigDecimal(i),i,"SUCCESS");
+            orderDao.insertOrder(new BigDecimal(i),i + 1,"SUCCESS");
         }
     }
 
@@ -60,9 +61,9 @@ public class OrderDaoTest {
 
     @Test
     public void testInsertUser(){
-        for (int i = 10 ; i<14; i++){
+        for (int i = 0 ; i<= 20; i++){
             Long id = i + 1L;
-            userDao.insertUser(id,"ÐÕÃû"+ id );
+            userDao.insertUser(id,"å§“å"+ id );
         }
 
     }
@@ -86,8 +87,8 @@ public class OrderDaoTest {
 
     @Test
     public void testInsertDict(){
-        dictDao.insertDict(3L,"user_type","2","³¬¼¶¹ÜÀíÔ±");
-        dictDao.insertDict(4L,"user_type","3","¶þ¼¶¹ÜÀíÔ±");
+        dictDao.insertDict(3L,"user_type","2","æ²³å—");
+        dictDao.insertDict(4L,"user_type","3","éƒ‘å·žå¸‚");
     }
     @Test
     public void testDeleteDict(){
