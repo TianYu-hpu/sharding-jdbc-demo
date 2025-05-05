@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * @author Administrator
@@ -32,11 +33,27 @@ public class OrderDaoTest {
     DictDao dictDao;
 
     @Test
-    public void testInsertOrder(){
-        for(long i=1;i<20;i++){
-            orderDao.insertOrder(new BigDecimal(i),i,"SUCCESS");
-            orderDao.insertOrder(new BigDecimal(i),i + 1,"SUCCESS");
+    public void testInsertOrder() throws ExecutionException, InterruptedException {
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(10,20, 1000L, TimeUnit.MICROSECONDS, new ArrayBlockingQueue<>(10), new ThreadPoolExecutor.DiscardOldestPolicy());
+
+        List<Callable<String>> tasks = new ArrayList<>();
+        for (int i = 0; i < 100000; i++) {
+            tasks.add(new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    for (long i = 1; i < 20; i++) {
+                        orderDao.insertOrder(new BigDecimal(i), i, "SUCCESS");
+                    }
+                    return "Result-" + Thread.currentThread().getId();
+                }
+            });
         }
+
+        List<Future<String>> results = executor.invokeAll(tasks);
+        for (Future<String> result : results) {
+            System.out.println(result.get());
+        }
+
     }
 
     @Test
