@@ -3,6 +3,9 @@ package com.itheima.dbsharding.simple;
 import com.itheima.dbsharding.simple.dao.DictDao;
 import com.itheima.dbsharding.simple.dao.OrderDao;
 import com.itheima.dbsharding.simple.dao.UserDao;
+import com.itheima.dbsharding.simple.mapper.OrderMapper;
+import com.itheima.dbsharding.simple.model.Order;
+import com.sankuai.inf.leaf.segment.SegmentIDGenImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.*;
 
 /**
  * @author Administrator
@@ -27,33 +29,31 @@ public class OrderDaoTest {
     OrderDao orderDao;
 
     @Autowired
+    OrderMapper orderMapper;
+
+    @Autowired
+    SegmentIDGenImpl idGen;
+
+    @Autowired
     UserDao userDao;
 
     @Autowired
     DictDao dictDao;
 
     @Test
-    public void testInsertOrder() throws ExecutionException, InterruptedException {
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(10,20, 1000L, TimeUnit.MICROSECONDS, new ArrayBlockingQueue<>(10), new ThreadPoolExecutor.DiscardOldestPolicy());
-
-        List<Callable<String>> tasks = new ArrayList<>();
-        for (int i = 0; i < 100000; i++) {
-            tasks.add(new Callable<String>() {
-                @Override
-                public String call() throws Exception {
-                    for (long i = 1; i < 20; i++) {
-                        orderDao.insertOrder(new BigDecimal(i), i, "SUCCESS");
-                    }
-                    return "Result-" + Thread.currentThread().getId();
-                }
-            });
+    public void testInsertOrder(){
+        for(int i=1;i<100;i++){
+            Order order = new Order();
+            order.setOrderId(idGen.get("order_id").getId());
+            order.setUserId(i + 0L);
+            order.setPrice(new BigDecimal(i));
+            order.setStatus("SUCCESS");
+            orderMapper.insert(order);
+            /*orderDao.saveOrder(idGen.get("order_id").getId(), new BigDecimal(i),i + 0L,"SUCCESS");
+            orderDao.saveOrder(idGen.get("order_id").getId(), new BigDecimal(i),i + 1L,"SUCCESS");
+            orderDao.saveOrder(idGen.get("order_id").getId(), new BigDecimal(i),i + 2L,"SUCCESS");
+            orderDao.saveOrder(idGen.get("order_id").getId(), new BigDecimal(i),i + 3L,"SUCCESS");*/
         }
-
-        List<Future<String>> results = executor.invokeAll(tasks);
-        for (Future<String> result : results) {
-            System.out.println(result.get());
-        }
-
     }
 
     @Test
@@ -78,7 +78,7 @@ public class OrderDaoTest {
 
     @Test
     public void testInsertUser(){
-        for (int i = 0 ; i<= 20; i++){
+        for (int i = 10 ; i<14; i++){
             Long id = i + 1L;
             userDao.insertUser(id,"姓名"+ id );
         }
@@ -104,8 +104,8 @@ public class OrderDaoTest {
 
     @Test
     public void testInsertDict(){
-        dictDao.insertDict(3L,"user_type","2","河南");
-        dictDao.insertDict(4L,"user_type","3","郑州市");
+        dictDao.insertDict(3L,"user_type","2","超级管理员");
+        dictDao.insertDict(4L,"user_type","3","二级管理员");
     }
     @Test
     public void testDeleteDict(){

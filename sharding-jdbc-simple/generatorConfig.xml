@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 数据库驱动 -->
+    <context id="mysql" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/order_db_0?useUnicode=true&amp;serverTimezone=GMT%2B8&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"
+                        userId="root"
+                        password="Tian@0628"/>
+        <!-- 实体类生成路径 -->
+        <javaModelGenerator targetPackage="com.itheima.dbsharding.simple.model" targetProject="src/main/java"/>
+        <!-- Mapper XML路径 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources/mapper"/>
+        <!-- Mapper接口路径 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.itheima.dbsharding.simple.mapper" targetProject="src/main/java"/>
+        <!-- 指定生成表 -->
+        <table tableName="t_order" domainObjectName="Order"/>
+    </context>
+</generatorConfiguration>
