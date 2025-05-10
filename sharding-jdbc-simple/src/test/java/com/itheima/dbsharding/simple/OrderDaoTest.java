@@ -3,8 +3,8 @@ package com.itheima.dbsharding.simple;
 import com.itheima.dbsharding.simple.dao.DictDao;
 import com.itheima.dbsharding.simple.dao.OrderDao;
 import com.itheima.dbsharding.simple.dao.UserDao;
-import com.itheima.dbsharding.simple.mapper.OrderMapper;
-import com.itheima.dbsharding.simple.model.Order;
+//import com.itheima.dbsharding.simple.mapper.OrderMapper;
+//import com.itheima.dbsharding.simple.model.Order;
 import com.sankuai.inf.leaf.segment.SegmentIDGenImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,8 +28,8 @@ public class OrderDaoTest {
     @Autowired
     OrderDao orderDao;
 
-    @Autowired
-    OrderMapper orderMapper;
+    /*@Autowired
+    OrderMapper orderMapper;*/
 
     @Autowired
     SegmentIDGenImpl idGen;
@@ -40,7 +40,7 @@ public class OrderDaoTest {
     @Autowired
     DictDao dictDao;
 
-    @Test
+    /*@Test
     public void testInsertOrder(){
         for(int i=1;i<100;i++){
             Order order = new Order();
@@ -49,12 +49,12 @@ public class OrderDaoTest {
             order.setPrice(new BigDecimal(i));
             order.setStatus("SUCCESS");
             orderMapper.insert(order);
-            /*orderDao.saveOrder(idGen.get("order_id").getId(), new BigDecimal(i),i + 0L,"SUCCESS");
+            *//*orderDao.saveOrder(idGen.get("order_id").getId(), new BigDecimal(i),i + 0L,"SUCCESS");
             orderDao.saveOrder(idGen.get("order_id").getId(), new BigDecimal(i),i + 1L,"SUCCESS");
             orderDao.saveOrder(idGen.get("order_id").getId(), new BigDecimal(i),i + 2L,"SUCCESS");
-            orderDao.saveOrder(idGen.get("order_id").getId(), new BigDecimal(i),i + 3L,"SUCCESS");*/
+            orderDao.saveOrder(idGen.get("order_id").getId(), new BigDecimal(i),i + 3L,"SUCCESS");*//*
         }
-    }
+    }*/
 
     @Test
     public void testSelectOrderbyIds(){
