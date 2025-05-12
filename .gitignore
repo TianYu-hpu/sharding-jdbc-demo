@@ -28,6 +28,7 @@ replay_pid*
 ### Maven template
 target/
 sharding-jdbc-simple/target/
+dbsharding.iml
 sharding-jdbc-simple/sharding-jdbc-simple.iml
 pom.xml.tag
 pom.xml.releaseBackup
